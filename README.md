@@ -20,9 +20,13 @@ Assumptions made:
 
 Query explanations (assume part #2 only):
 2.1 (or Part 2a as used in filename):  COUNT(a.appointment_id) counts the number of appointments for this patient when taken over the joined table.  The WHERE clause ensures that these are completed appointments within the past 3 months.  LIMIT 5 will return up to 5 patients, but may return fewer if fewer than 5 patients have had appointments in the past 3 months.
+
 2.2 (or Part 2b as used in filename): We use a sum over a case statement that counts missed appointments, then divide by the total number of appointments grouped by clinician.  
+
 2.3 (or Part 2c as used in filename): We count the number of appointments, and divide by the count of distinct patients grouped by each separate clinician.  The ORDER BY and LIMIT guarantee that we get the top result in terms of average appointments per patient.
+
 2.4 (or Part 2d as used in filename): This one is complex, so let me explain each SELECT statement separately.  The monthly_rates SELECT calculates the missed appointment percentage over each month in chronological order.  The numbered SELECT converts the months in the first SELECT statement to row numbers, and labels this as x.  The stats SELECT is an intermediate calculation that prepares us to calculate coefficients for the linear regression (e.g. the slope and intercept).  The slope and intercept are calculated in the coefficients SELECT.  The final SELECT calculates the trendline values using the slope and intercept, and prepares our data for plotting (this code segment is also used for a plot in Section 3 (second plot of section 3)).  
+
 2.5 (or Part 2e as used in filename): We simply look for patients who have not had an appointment or sent a message within the last 30 days: in these cases, a.appointment_id and e.engagement_id are NULL in the joined table.
 
 I also added the queries for Part 3 in this repo, but my interpretation of the assignment is that you only want explanations for the queries that were required to be uploaded for Part 2.
